@@ -36,3 +36,7 @@ int main(void)
     mlx_loop(fractol.mlx_ptr);
     return (0);
 }
+
+/* funcion de las ventanas */
+/* funcion para el tipo de fractal */
+/* funciones para menejar los fractales 1 a 1 */

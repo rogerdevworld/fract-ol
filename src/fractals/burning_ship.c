@@ -1,28 +1,26 @@
-#include "../include/fract-ol.h"
+#include "../../include/fract-ol.h"
 
-//burning_ship zₙ₊₁ = abs(zₙ)² + c.
-void burning_ship(t_fractol *fractal)
-{
-    int i;
-    double x_temp;
+//burning_ship zₙ₊₁ = abs(zₙ)² + c
+void burning_ship(t_fractal *f) {
+    for (int y = 0; y < f->height; y++) {
+        for (int x = 0; x < f->width; x++) {
+            // Convertir las coordenadas de la pantalla a coordenadas del plano complejo
+            double zx = 0.0;
+            double zy = 0.0;
+            double cx = (x - f->width / 2.0) * 4.0 / (f->width * f->zoom) + f->move_x;
+            double cy = (y - f->height / 2.0) * 4.0 / (f->height * f->zoom) + f->move_y;
+            int iter = 0;
 
-    fractal->name = "ship";
-    i = 0;
-    fractal->zx = 0.0;
-    fractal->zy = 0.0;
-    fractal->cx = (fractal->x / fractal->zoom) + fractal->offset_x;
-    fractal->cy = (fractal->y / fractal->zoom) + fractal->offset_y;
+            // Iterar la fórmula del Burning Ship
+            while (zx * zx + zy * zy < 4.0 && iter < f->max_iter) {
+                double tmp = zx * zx - zy * zy + cx;
+                zy = fabs(2.0 * zx * zy) + cy; // Valor absoluto de la parte imaginaria
+                zx = fabs(tmp); // Valor absoluto de la parte real
+                iter++;
+            }
 
-    while (++i < fractal->max_iterations)
-    {
-        x_temp = fractal->zx * fractal->zx - fractal->zy * fractal->zy + fractal->cx;
-        fractal->zy = fabs(2.0 * fractal->zx * fractal->zy) + fractal->cy;
-        fractal->zx = fabs(x_temp);
-        if (fractal->zx * fractal->zx + fractal->zy * fractal->zy >= 4.0) // Cambiado a 4.0
-            break;
+            // Colorear el píxel según el número de iteraciones
+            put_pixel(f, x, y, get_color(iter, f->max_iter));
+        }
     }
-    if (i == fractal->max_iterations)
-        put_color_to_pixel(fractal, fractal->x, fractal->y, 0x000000);
-    else
-        put_color_to_pixel(fractal, fractal->x, fractal->y, (fractal->color * (i % 255))); // Asegúrate de que fractal->color esté definido
 }

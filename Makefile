@@ -1,7 +1,16 @@
 # Mandatory functions
 NAME = fract-ol
-SRC = ./src/
-SRCS = $(wildcard $(SRC)*.c)
+SRCS = ./src/fract-ol.c ./src/parse.c ./src/window.c\
+	./src/fractals/julia.c\
+	./src/fractals/mandelbrot.c\
+	./src/fractals/barnsley_fern.c\
+	./src/fractals/lyapunov.c\
+	./src/fractals/newton.c\
+	./src/fractals/tricorn.c\
+	./src/fractals/burning_ship.c\
+	./src/fractals/koch.c\
+	./src/fractals/sierpinski.c
+
 OBJS = $(SRCS:.c=.o)
 HEADER = ./include/fract-ol.h
 CC = gcc
@@ -30,12 +39,12 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@echo "$(GREEN)Compilando MiniLibX...$(RESET)"
 	make -C $(MLX)
-	@echo "$(GREEN)Compilando fract-ol...$(RESET)"
+	@echo "$(GREEN)Compilando $(NAME)...$(RESET)"
 	$(CC) $(OBJS) $(MLX)/libmlx.a -o $(NAME) $(MLX_FLAGS)
 	@echo "$(BLUE)"
 	@echo "$(YELLOW)           ($(RESET)__$(YELLOW))\           $(RESET)"
 	@echo "$(YELLOW)           ($(RESET)oo$(YELLOW))\\________  $(RESET)"
-	@echo "$(RESET)           /|| \\        \\ fract-ol READY$(RESET)"
+	@echo "$(RESET)           /|| \\        \\ $(NAME) ready$(RESET)"
 	@echo "$(RESET)              ||------w | $(RESET)"
 	@echo "$(RESET)              ||       || $(RESET)"
 	@echo "$(YELLOW)THE COW MAKES MUUUUUUUUUU!$(RESET)"

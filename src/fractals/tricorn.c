@@ -1,17 +1,17 @@
 #include "../../include/fract-ol.h"
 
-void mandelbrot(t_fractal *f) {
+void tricorn(t_fractal *f) {
     for (int y = 0; y < f->height; y++) {
         for (int x = 0; x < f->width; x++) {
-            double zx = 0.0;
-            double zy = 0.0;
-            double cx = (x - f->width / 2.0) * 4.0 / (f->width * f->zoom) + f->move_x;
-            double cy = (y - f->height / 2.0) * 4.0 / (f->height * f->zoom) + f->move_y;
+            double zx = (x - f->width / 2.0) * 4.0 / (f->width * f->zoom) + f->move_x;
+            double zy = (y - f->height / 2.0) * 4.0 / (f->height * f->zoom) + f->move_y;
+            double cx = zx;
+            double cy = zy;
             int iter = 0;
 
             while (zx * zx + zy * zy < 4.0 && iter < f->max_iter) {
                 double tmp = zx * zx - zy * zy + cx;
-                zy = 2.0 * zx * zy + cy;
+                zy = -2.0 * zx * zy + cy;
                 zx = tmp;
                 iter++;
             }

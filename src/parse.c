@@ -1,85 +1,52 @@
 #include "../include/fract-ol.h"
 
-// Función para procesar argumentos
-void parse_arguments(int argc, char **argv, t_fractol *fractol)
+void show_usage()
 {
-    if (argc < 2)
-    {
-        fprintf(stderr, "Uso: ./fractol <fractal_name> [params]\n");
-        exit(1);
-    }
-
-    // Convertir el primer argumento a mayúsculas
-    ft_upper(argv[1]);
-    
-    // Manejar el tipo de fractal
-    if (strcmp(argv[1], "MANDELBROT") == 0)
-    {
-        fractol->fractal = MANDELBROT;
-    }
-    else if (strcmp(argv[1], "JULIA") == 0)
-    {
-        fractol->fractal = JULIA;
-        if (argc == 4) // Si se proporcionan parámetros para Julia
-        {
-            fractol->julia_cx = ft_atof(argv[2]); // Asegúrate de tener ft_atof
-            fractol->julia_cy = ft_atof(argv[3]);
-        }
-        else
-        {
-            fprintf(stderr, "Uso: ./fractol JULIA <cx> <cy>\n");
-            exit(1);
-        }
-    }
-    else if (strcmp(argv[1], "BURNING_SHIP") == 0)
-    {
-        fractol->fractal = BURNING_SHIP;
-    }
-    else
-    {
-        fprintf(stderr, "Fractal no reconocido. Usa MANDELBROT, JULIA o BURNING_SHIP.\n");
-        exit(1);
-    }
+    printf("Uso: ./fractol <fractal>\n");
+    printf("Opciones de fractal:\n");
+    printf("  M: Mandelbrot\n");
+    printf("  J: Julia (requiere c_real y c_imag)\n");
+    printf("  B: Burning Ship\n");
+    printf("  T: Tricorn\n");
+    printf("  N: Newton\n");
+    printf("  F: Barnsley Fern\n");
+    printf("  S: Sierpinski\n");
+    printf("  K: Koch\n");
+    printf("  L: Lyapunov\n");
+    printf("Ejemplo para Julia: ./fractol J -0.7 0.27015\n");
 }
 
-#include <stdio.h>
-
-double ft_atof(const char *str)
-{
-    double result = 0.0;
-    double decimal_place = 1.0;
-    int sign = 1;
-
-    // Ignorar espacios en blanco
-    while (*str == ' ' || (*str >= 9 && *str <= 13))
-        str++;
-
-    // Manejar el signo
-    if (*str == '-' || *str == '+')
-    {
-        if (*str == '-')
-            sign = -1;
-        str++;
+int parse_arguments(int argc, char **argv, t_fractal *f) {
+    if (argc < 2) {
+        show_usage();
+        return (0); // Error: no se proporcionó ningún fractal
     }
 
-    // Convertir la parte entera
-    while (*str >= '0' && *str <= '9')
-    {
-        result = result * 10.0 + (*str - '0');
-        str++;
+    // Validar el nombre del fractal
+    char *valid_fractals = "MJBTNFSKL"; // Fractales válidos
+    if (strchr(valid_fractals, argv[1][0]) == NULL) {
+        printf("Error: fractal no válido.\n");
+        show_usage();
+        return (0); // Error: fractal no válido
     }
 
-    // Manejar la parte decimal
-    if (*str == '.')
-    {
-        str++;
-        while (*str >= '0' && *str <= '9')
-        {
-            decimal_place *= 0.1;
-            result += (*str - '0') * decimal_place;
-            str++;
+    // Asignar el nombre del fractal
+    f->name = argv[1];
+
+    // Validar los parámetros adicionales para Julia
+    if (f->name[0] == 'J') {
+        if (argc != 4) {
+            printf("Error: Julia requiere c_real y c_imag.\n");
+            show_usage();
+            return (0); // Error: argumentos faltantes para Julia
         }
+        f->c_julia_real = atof(argv[2]); // Parte real de c
+        f->c_julia_imag = atof(argv[3]); // Parte imaginaria de c
+    } else if (argc > 2) {
+        printf("Error: este fractal no requiere parámetros adicionales.\n");
+        show_usage();
+        return (0); // Error: parámetros adicionales no necesarios
     }
 
-    return result * sign;
+    return (1); // Éxito: los argumentos son válidos
 }

@@ -1,46 +1,61 @@
-#ifndef FRACT_OL_H
-# define FRACT_OL_H
+#ifndef FRACTOL_H
+# define FRACTOL_H
 
-/* MiniLibX */
-# include <../minilibx/mlx.h>
-
-/* libft */
-# include <../libft/libft.h>
-
-/* lib */
+# include "../minilibx/mlx.h"
+# include <math.h>
 # include <stdlib.h>
 # include <stdio.h>
-#include <stdio.h>
-#include <math.h>
+# include <string.h>
 
-typedef struct s_fractol {
-    void    *mlx;             // Instancia de la conexión a MinilibX
-    void    *win;             // Ventana creada
-    void    *img;             // Imagen que se va a mostrar
-    int     zoom_factor;      // Factor de zoom
-    double  x_offset;         // Desplazamiento en el eje X
-    double  y_offset;         // Desplazamiento en el eje Y
-    int     width;            // Ancho de la ventana
-    int     height;           // Alto de la ventana
-    double  mouse_x;          // Posición X del mouse
-    double  mouse_y;          // Posición Y del mouse
-    int     is_dragging;      // Estado de arrastre del mouse
-    char    *fractal
-} t_fractol;
+# define WIDTH 800
+# define HEIGHT 800
+# define MAX_ITER 100
 
-void mandelbrot(t_fractal *fractal);
-void julia(t_fractal *fractal, double cx, double cy);
-void burning_ship(t_fractal *fractal);
+typedef struct s_fractal {
+    void    *mlx;
+    void    *win;
+    void    *img;
+    char    *addr;
+    int     bits_per_pixel;
+    int     line_length;
+    int     endian;
+    double  cx;
+    double  cy;
+    double  zoom;
+    int     max_iter;
+    int     width;
+    int     height;
+    double  move_x;
+    double  move_y;
+    int     color_scheme;
+    char    *name;
+    double  c_julia_real;
+    double  c_julia_imag;
+} t_fractal;
 
-// Prototipos de funciones
-void parse_arguments(int argc, char **argv, t_fractol *fractol);
-void render_fractal(t_fractol *fractol);
-double ft_atof(const char *str);
-void zoom(t_fractol *fractol, int direction);
-void mouse_move(t_fractol *fractol, int x, int y);
-int handle_mouse(int button, int x, int y, t_fractol *fractol);
-int handle_mouse_move(int x, int y, t_fractol *fractol);
-int handle_key(int keycode, t_fractol *fractol);
-int close_window(t_fractol *fractol);
+// Funciones principales
+void    init_fractal(t_fractal *f);
+void    render_fractal(t_fractal *f);
+int     close_window(t_fractal *f);
+int     key_hook(int keycode, t_fractal *f);
+int     mouse_hook(int button, int x, int y, t_fractal *f);
+
+// Funciones de fractales
+void    mandelbrot(t_fractal *f);
+void    julia(t_fractal *f);
+void    burning_ship(t_fractal *f);
+void    tricorn(t_fractal *f);
+void    newton(t_fractal *f);
+void    barnsley_fern(t_fractal *f);
+void    sierpinski(t_fractal *f);
+void    koch(t_fractal *f);
+void    lyapunov(t_fractal *f);
+
+// Utils
+void    put_pixel(t_fractal *f, int x, int y, int color);
+int     get_color(int iter, int max_iter);
+
+void show_usage();
+int parse_arguments(int argc, char **argv, t_fractal *f);
 
 #endif

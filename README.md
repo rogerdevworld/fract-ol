@@ -1,14 +1,3 @@
-¡Claro! A continuación, te proporcionaré una **documentación completa** en formato **Markdown** (`.md`) para tu proyecto **fract'ol**. Esta documentación incluye:
-
-1. **Instrucciones de uso**.
-2. **Explicación de las funciones de la MiniLibX**.
-3. **Fórmulas matemáticas de los fractales**.
-4. **Código de los fractales Mandelbrot, Julia y Burning Ship**.
-
-Puedes copiar este contenido en un archivo `README.md` en tu repositorio de Git.
-
----
-
 ## **Documentación del Proyecto fract'ol**
 
 ### **Instrucciones de Uso**
@@ -16,7 +5,7 @@ Puedes copiar este contenido en un archivo `README.md` en tu repositorio de Git.
 1. **Descargar el proyecto**:
    - Clona el repositorio de Git:
      ```bash
-     git clone https://github.com/tu-usuario/fract-ol.git
+     git clone https://github.com/rogerdevwrold/fract-ol.git
      cd fract-ol
      ```
 

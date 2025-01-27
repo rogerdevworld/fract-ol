@@ -1,30 +1,53 @@
-#include "../include/fract-ol.c"
+#include "../include/fract-ol.h"
 
 //dibujar los fractales 
-int draw_fractal(t_fractal *fractal, char *query, double cx, double cy)
+void render_fractal(t_fractol *fractol)
 {
-    fractal->x = 0;
-    fractal->y = 0;
-    while (fractal->x < SIZE)
+    int x, y;
+
+    // Limpiar la imagen
+    mlx_clear_window(fractol->mlx, fractol->win);
+    // O si estás usando una imagen:
+    // mlx_destroy_image(fractol->mlx, fractol->img);
+    // fractol->img = mlx_new_image(fractol->mlx, fractol->width, fractol->height);
+
+    // Recorrer cada píxel de la ventana
+    for (y = 0; y < fractol->height; y++)
     {
-        while (fractal->y < SIZE)
+        for (x = 0; x < fractol->width; x++)
         {
-            if (ft_strncmp(query, "mandel", 7) == 0)
-                calculate_mandelbrot(fractal);
-            else if (ft_strncmp(query, "julia", 6) == 0)
-                calculate_julia(fractal, cx, cy);
-            else if (ft_strncmp(query, "ship", 5) == 0)
-                calculate_burning_ship(fractal);
-            else
+            // Establecer las coordenadas del fractal
+            fractol->x = x;
+            fractol->y = y;
+
+            // Llamar a la función de fractal correspondiente
+            if (fractol->current_fractal == BURNING_SHIP)
             {
-                ft_putendl_fd("Available fractals: mandel, julia, ship", 1);
-                exit_fractal(fractal);
+                burning_ship(fractol);
             }
-            fractal->y++;
+            else if (fractol->current_fractal == JULIA)
+            {
+                julia(fractol, fractol->julia_cx, fractol->julia_cy);
+            }
+            else if (fractol->current_fractal == MANDELBROT)
+            {
+                mandelbrot(fractol);
+            }
         }
-        fractal->x++;
-        fractal->y = 0;
     }
-    mlx_put_image_to_window(fractal->mlx, fractal->win, fractal->img, 0, 0);
-    return (0);
+
+    // Actualizar la ventana con la nueva imagen
+    mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img, 0, 0);
+}
+
+void put_color_to_pixel(t_fractol *fractal, int x, int y, int color)
+{
+    char *img_data;
+    int bpp; // bits por pixel
+    int size_line; // tamaño de línea
+    int endian; // endian
+
+    img_data = mlx_get_data_addr(fractal->img, &bpp, &size_line, &endian);
+    int pixel_index = (y * size_line) + (x * (bpp / 8));
+    *(int *)(img_data + pixel_index) = color; // Asignar el color al píxel
 }

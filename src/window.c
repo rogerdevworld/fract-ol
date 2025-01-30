@@ -2,7 +2,7 @@
 
 void init_fractal(t_fractal *f) {
     f->mlx = mlx_init();
-    f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "Fract'ol");
+    f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "Fract-ol");
     f->img = mlx_new_image(f->mlx, WIDTH, HEIGHT);
     f->addr = mlx_get_data_addr(f->img, &f->bits_per_pixel, &f->line_length, &f->endian);
     f->width = WIDTH;
@@ -10,10 +10,10 @@ void init_fractal(t_fractal *f) {
     f->cx = -0.5; // Centro en el eje real
     f->cy = -0.5; // Centro en el eje imaginario
     f->zoom = 1.0;
-    f->max_iter = 100; // Número máximo de iteraciones
     f->move_x = 0.0;
     f->move_y = 0.0;
 }
+
 
 void render_fractal(t_fractal *f) {
     if (f->name[0] == 'M')
@@ -22,18 +22,6 @@ void render_fractal(t_fractal *f) {
         julia(f);
     else if (f->name[0] == 'B')
         burning_ship(f);
-    else if (f->name[0] == 'T')
-        tricorn(f);
-    else if (f->name[0] == 'N')
-        newton(f);
-    else if (f->name[0] == 'F')
-        barnsley_fern(f);
-    else if (f->name[0] == 'S')
-        sierpinski(f);
-    else if (f->name[0] == 'K')
-        koch(f);
-    else if (f->name[0] == 'L')
-        lyapunov(f);
     mlx_put_image_to_window(f->mlx, f->win, f->img, 0, 0);
 }
 

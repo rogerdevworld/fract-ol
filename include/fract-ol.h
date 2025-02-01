@@ -57,4 +57,7 @@ int     get_color(int iter, int max_iter);
 void show_usage();
 int parse_arguments(int argc, char **argv, t_fractal *f);
 
+void process_pixel(t_fractal *f, int x, int y);
+
+
 #endif

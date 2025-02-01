@@ -12,37 +12,45 @@ void show_usage()
     printf("Ejemplo para Burning Ship: ./fract-ol B 100\n");
 }
 
-int parse_arguments(int argc, char **argv, t_fractal *f)
-{
+int validate_arguments(int argc, char **argv, t_fractal *f) {
     if (argc < 3) {
         show_usage();
-        return (0);
+        return 0;
     }
     char *valid_fractals = "MJB";
-    if (strchr(valid_fractals, argv[1][0]) == NULL)
-    {
+    if (strchr(valid_fractals, argv[1][0]) == NULL) {
         printf("Error: fractal no válido.\n");
         show_usage();
-        return (0);
+        return 0;
     }
+    return 1;
+}
+
+void set_fractal_parameters(int argc, char **argv, t_fractal *f) {
     f->name = argv[1];
     if (f->name[0] == 'J') {
         if (argc != 5) {
             printf("Error: Julia requiere c_real, c_imag y max_iter.\n");
             show_usage();
-            return (0);
+            return;
         }
         f->c_julia_real = atof(argv[2]);
         f->c_julia_imag = atof(argv[3]);
         f->max_iter = atoi(argv[4]);
-    }
-    else if (argc != 3)
-    {
-        printf("Error: este fractal no requiere parámetros adicionales.\n");
-        show_usage();
-        return (0);
     } else {
+        if (argc != 3) {
+            printf("Error: este fractal no requiere parámetros adicionales.\n");
+            show_usage();
+            return;
+        }
         f->max_iter = atoi(argv[2]);
     }
-    return (1);
+}
+
+int parse_arguments(int argc, char **argv, t_fractal *f) {
+    if (!validate_arguments(argc, argv, f)) {
+        return 0;
+    }
+    set_fractal_parameters(argc, argv, f);
+    return 1;
 }

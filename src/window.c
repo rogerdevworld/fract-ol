@@ -25,7 +25,8 @@ void render_fractal(t_fractal *f) {
     mlx_put_image_to_window(f->mlx, f->win, f->img, 0, 0);
 }
 
-int close_window(t_fractal *f) {
+int close_window(t_fractal *f)
+{
     mlx_destroy_image(f->mlx, f->img);
     mlx_destroy_window(f->mlx, f->win);
     exit(0);
@@ -33,8 +34,21 @@ int close_window(t_fractal *f) {
 }
 
 int key_hook(int keycode, t_fractal *f) {
-    if (keycode == 53) // Tecla ESC
-        close_window(f);
+    if (keycode == 65307) {  // Tecla ESC
+        close_window(f);   // Cierra la ventana
+        exit(0);            // Termina el programa
+    } else if (keycode == 49) {  // Tecla 1
+        f->color_scheme = 1;  // Cambia al esquema de color 1
+    } else if (keycode == 50) {  // Tecla 2
+        f->color_scheme = 2;  // Cambia al esquema de color 2
+    } else if (keycode == 51) {  // Tecla 3
+        f->color_scheme = 3;  // Cambia al esquema de color 3
+    } else if (keycode == 52) {  // Tecla 4
+        f->color_scheme = 4;  // Cambia al esquema de color 4
+    }
+
+    // Vuelve a renderizar el fractal con el nuevo esquema de color
+    render_fractal(f);
     return (0);
 }
 
@@ -57,14 +71,19 @@ void put_pixel(t_fractal *f, int x, int y, int color) {
     *(unsigned int *)dst = color;
 }
 
-int get_color(int iter, int max_iter) {
+int get_color(int iter, int max_iter, t_fractal *f)
+{
     if (iter == max_iter) {
-        return 0x000000; // Color negro para los puntos dentro del fractal
+        return (0x000000);
     }
-
-    double t = (double)iter / max_iter;
-    int r = (int)(9 * (1 - t) * t * t * t * 255);
-    int g = (int)(15 * (1 - t) * (1 - t) * t * t * 255);
-    int b = (int)(8.5 * (1 - t) * (1 - t) * (1 - t) * t * 255);
-    return (r << 16 | g << 8 | b);
+    if (f->color_scheme == 1)
+        return (iter * 10 % 256) << 16 | (iter * 7 % 256) << 8 | (iter * 5 % 256);
+    else if (f->color_scheme == 2)
+        return (iter * 5 % 256) << 16 | (iter * 7 % 256) << 8 | (iter * 10 % 256);
+    else if (f->color_scheme == 3) {
+        int gray = iter * 255 / max_iter;
+        return ((gray << 16) | (gray << 8) | gray);
+    } else if (f->color_scheme == 4)
+        return (iter * 123 % 256) << 16 | (iter * 321 % 256) << 8 | (iter * 213 % 256);
+    return (0xFFFFFF);  // Color por defecto (blanco)
 }

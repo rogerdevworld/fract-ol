@@ -15,16 +15,17 @@ void process_pixel(t_fractal *f, int x, int y)
         zx = fabs(tmp);
         iter++;
     }
-
-    put_pixel(f, x, y, get_color(iter, f->max_iter));
+    int color = get_color(iter, f->max_iter, f);
+    put_pixel(f, x, y, get_color(iter, f->max_iter, f));
 }
 
 void burning_ship(t_fractal *f) {
     int x, y;
-    int progress = 0;
+    int progress;
     int new_progress;
     
     y = 0;
+    progress = 0;
     while (y < f->height) {
         x = 0;
         while (x < f->width) {

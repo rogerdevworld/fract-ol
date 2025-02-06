@@ -53,10 +53,10 @@ void    lyapunov(t_fractal *f);
 
 // Utils
 void    put_pixel(t_fractal *f, int x, int y, int color);
-int     get_color(int iter, int max_iter);
+int get_color(int iter, int max_iter, t_fractal *f);
 void show_usage();
 int parse_arguments(int argc, char **argv, t_fractal *f);
-
+void process_pixel_m(t_fractal *f, int x, int y);
 void process_pixel(t_fractal *f, int x, int y);
 
 

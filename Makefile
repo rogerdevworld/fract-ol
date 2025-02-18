@@ -9,31 +9,22 @@
 #    Updated: 2025/02/17 11:55:01 by rmarrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 # --- Mandatory --- #
 NAME = fract-ol
 SRC_DIR = ./src/
 OBJ_DIR = ./obj
 
-# Listado de archivos fuente
 SRCS =	$(SRC_DIR)fract-ol.c $(SRC_DIR)parse.c $(SRC_DIR)window.c \
 		$(SRC_DIR)fractals/julia.c $(SRC_DIR)fractals/mandelbrot.c $(SRC_DIR)fractals/burning_ship.c
 
-# Convertimos los archivos .c en .o en la carpeta de objetos
 OBJS = $(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)/%.o)
-
 HEADER = ./include/fract-ol.h
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -I./include
 RM = rm -rf
-
-# Dependencias
 LIBFT = ./libft
 EX_LIB = $(LIBFT)/libft.a
-
 MLX = ./minilibx
-
-# Plataforma
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
 	MLX_FLAGS = -lXext -lX11 -lm
@@ -41,14 +32,12 @@ else
 	MLX_FLAGS = -framework OpenGL -framework AppKit
 endif
 
-# Color
 RED     = \033[31m
 GREEN   = \033[32m
 YELLOW  = \033[33m
 BLUE    = \033[34m
 RESET   = \033[0m
 
-# Regla principal
 all: libs $(NAME)
 
 libs:

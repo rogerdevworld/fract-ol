@@ -1,6 +1,7 @@
 #include "../../include/fract-ol.h"
 
-void process_pixel_m(t_fractal *f, int x, int y) {
+void process_pixel_m(t_fractal *f, int x, int y)
+{
     double zx = 0.0;
     double zy = 0.0;
     double cx = (x - f->width / 2.0) * 4.0 / (f->width * f->zoom) + f->move_x;
@@ -14,11 +15,7 @@ void process_pixel_m(t_fractal *f, int x, int y) {
         zx = tmp;
         iter++;
     }
-
-    // Usa get_color para obtener el color basado en las iteraciones
-    int color = get_color(iter, f->max_iter, f);
-    // Dibuja el píxel en la imagen
-    put_pixel(f, x, y, color);
+    put_pixel(f, x, y, get_color(iter, f->max_iter, f));
 }
 
 void mandelbrot(t_fractal *f) {

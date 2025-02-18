@@ -1,14 +1,36 @@
-# Mandatory functions
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/09/16 12:58:52 by rmarrero          #+#    #+#              #
+#    Updated: 2025/02/17 11:55:01 by rmarrero         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# --- Mandatory --- #
 NAME = fract-ol
-SRCS = ./src/fract-ol.c ./src/parse.c ./src/window.c\
-	./src/fractals/julia.c\
-	./src/fractals/mandelbrot.c\
-	./src/fractals/burning_ship.c
-#OBJS = $(SRCS:.c=.o)
+SRC_DIR = ./src/
+OBJ_DIR = ./obj
+
+# Listado de archivos fuente
+SRCS =	$(SRC_DIR)fract-ol.c $(SRC_DIR)parse.c $(SRC_DIR)window.c \
+		$(SRC_DIR)fractals/julia.c $(SRC_DIR)fractals/mandelbrot.c $(SRC_DIR)fractals/burning_ship.c
+
+# Convertimos los archivos .c en .o en la carpeta de objetos
+OBJS = $(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)/%.o)
+
 HEADER = ./include/fract-ol.h
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -I./include
-RM = rm -f
+RM = rm -rf
+
+# Dependencias
+LIBFT = ./libft
+EX_LIB = $(LIBFT)/libft.a
+
 MLX = ./minilibx
 
 # Plataforma
@@ -26,14 +48,24 @@ YELLOW  = \033[33m
 BLUE    = \033[34m
 RESET   = \033[0m
 
-# Rules
-all: $(NAME)
+# Regla principal
+all: libs $(NAME)
 
-$(NAME): $(OBJS) $(HEADER)
+libs:
+	@make -C $(LIBFT)
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR) \
+	$(OBJ_DIR)/fractals
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)%.c $(HEADER) Makefile | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME): $(EX_LIB) $(OBJS) $(HEADER)
 	@echo "$(GREEN)Compilando MiniLibX...$(RESET)"
 	make -C $(MLX)
 	@echo "$(GREEN)Compilando $(NAME)...$(RESET)"
-	$(CC) $(SRCS) $(MLX)/libmlx.a -o $(NAME) $(MLX_FLAGS)
+	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -L$(MLX) -lmlx $(MLX_FLAGS) -o $(NAME)
 	@echo "$(BLUE)"
 	@echo "$(YELLOW)           ($(RESET)__$(YELLOW))\           $(RESET)"
 	@echo "$(YELLOW)           ($(RESET)oo$(YELLOW))\\________  $(RESET)"
@@ -44,13 +76,16 @@ $(NAME): $(OBJS) $(HEADER)
 	@echo "$(RESET)"
 
 clean:
-	@echo "$(GREEN)Eliminando objetos...$(RESET)"
-	$(RM) $(OBJS)
+	@echo "$(GREEN)Eliminando archivos objeto...$(RESET)"
+	$(RM) $(OBJ_DIR)
+	@make clean -C $(LIBFT)
+	@make clean -C $(MLX)
 
 fclean: clean
-	@echo "$(GREEN)Eliminando todo...$(RESET)"
-	$(RM) $(NAME)
-	
+	@echo "$(GREEN)Eliminando ejecutable y librerías...$(RESET)"
+	$(RM) -f $(NAME)
+	@make fclean -C $(LIBFT)
+
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libs

@@ -12,7 +12,7 @@ void show_usage()
     printf("Ejemplo para Burning Ship: ./fract-ol B 100\n");
 }
 
-int validate_arguments(int argc, char **argv, t_fractal *f) {
+int validate_arguments(int argc, char **argv) {
     if (argc < 3) {
         show_usage();
         return 0;
@@ -48,7 +48,7 @@ void set_fractal_parameters(int argc, char **argv, t_fractal *f) {
 }
 
 int parse_arguments(int argc, char **argv, t_fractal *f) {
-    if (!validate_arguments(argc, argv, f)) {
+    if (!validate_arguments(argc, argv)) {
         return 0;
     }
     set_fractal_parameters(argc, argv, f);

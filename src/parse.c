@@ -33,7 +33,7 @@ int	validate_arguments(int argc, char **argv)
 		return (0);
 	}
 	valid_fractals = "MJB";
-	if (strchr(valid_fractals, argv[1][0]) == NULL)
+	if (ft_strchr(valid_fractals, argv[1][0]) == NULL)
 	{
 		ft_printf("Error: fractal no válido.\n");
 		show_usage();

@@ -33,7 +33,7 @@ void mandelbrot(t_fractal *f) {
         new_progress = (y * 100) / f->height;
         if (new_progress != progress) {
             progress = new_progress;
-            printf("Progreso: %d%%\n", progress);
+            ft_printf("Progreso: %d%%\n", progress);
         }
         y++;
     }

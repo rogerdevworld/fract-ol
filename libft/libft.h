@@ -142,4 +142,6 @@ void	ft_pointer(size_t pointer, int *length, int *flag);
 • %X Imprime un número hexadecimal (base 16) en mayúsculas. */
 void	ft_hex(unsigned int nbr, int *length, char x, int *flag);
 
+double  ft_atof(const char *str);
+double ft_fabs_double(double x);
 #endif

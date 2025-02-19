@@ -11,8 +11,8 @@ void process_pixel(t_fractal *f, int x, int y)
 
     while (zx * zx + zy * zy < 4 && iter < f->max_iter) {
         tmp = zx * zx - zy * zy + cx;
-        zy = fabs(2.0 * zx * zy) + cy;
-        zx = fabs(tmp);
+        zy = ft_fabs_double(2.0 * zx * zy) + cy;
+        zx = ft_fabs_double(tmp);
         iter++;
     }
     put_pixel(f, x, y, get_color(iter, f->max_iter, f));
@@ -34,7 +34,7 @@ void burning_ship(t_fractal *f) {
         new_progress = (y * 100) / f->height;
         if (new_progress != progress) {
             progress = new_progress;
-            printf("Progreso: %d%%\n", progress);
+            ft_printf("Progreso: %d%%\n", progress);
         }
         y++;
     }

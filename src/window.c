@@ -77,7 +77,7 @@ int get_color(int iter, int max_iter, t_fractal *f)
         return (0x000000);
     }
     if (f->color_scheme == 1)
-        return (iter * 10 % 256) << 16 | (iter * 7 % 256) << 8 | (iter * 5 % 256);
+        return ((iter * 10 % 256) << 16 | (iter * 7 % 256) << 8 | (iter * 5 % 256));
     else if (f->color_scheme == 2)
         return (iter * 5 % 256) << 16 | (iter * 7 % 256) << 8 | (iter * 10 % 256);
     else if (f->color_scheme == 3) {

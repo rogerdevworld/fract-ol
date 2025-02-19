@@ -1,56 +1,79 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 16:42:58 by rmarrero          #+#    #+#             */
+/*   Updated: 2025/02/19 16:53:36 by rmarrero         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../include/fract-ol.h"
 
-void show_usage()
+void	show_usage(void)
 {
-    ft_printf("Uso: ./fractol <fractal> <max_iter>\n");
-    ft_printf("Opciones de fractal:\n");
-    ft_printf("  M: Mandelbrot\n");
-    ft_printf("  J: Julia (requiere c_real y c_imag)\n");
-    ft_printf("  B: Burning Ship\n");
-    ft_printf("Ejemplo para Julia: ./fract-ol J -0.7 0.27015 100\n");
-    ft_printf("Ejemplo para Mandelbrot: ./fract-ol M 100\n");
-    ft_printf("Ejemplo para Burning Ship: ./fract-ol B 100\n");
+	ft_printf("Uso: ./fractol <fractal> <max_iter>\n");
+	ft_printf("Opciones de fractal:\n");
+	ft_printf("  M: Mandelbrot\n");
+	ft_printf("  J: Julia (requiere c_real y c_imag)\n");
+	ft_printf("  B: Burning Ship\n");
+	ft_printf("Ejemplo para Julia: ./fract-ol J -0.7 0.27015 100\n");
+	ft_printf("Ejemplo para Mandelbrot: ./fract-ol M 100\n");
+	ft_printf("Ejemplo para Burning Ship: ./fract-ol B 100\n");
 }
 
-int validate_arguments(int argc, char **argv) {
-    if (argc < 3) {
-        show_usage();
-        return 0;
-    }
-    char *valid_fractals = "MJB";
-    if (strchr(valid_fractals, argv[1][0]) == NULL) {
-        ft_printf("Error: fractal no válido.\n");
-        show_usage();
-        return 0;
-    }
-    return 1;
+int	validate_arguments(int argc, char **argv)
+{
+	char	*valid_fractals;
+
+	if (argc < 3)
+	{
+		show_usage();
+		return (0);
+	}
+	valid_fractals = "MJB";
+	if (strchr(valid_fractals, argv[1][0]) == NULL)
+	{
+		ft_printf("Error: fractal no válido.\n");
+		show_usage();
+		return (0);
+	}
+	return (1);
 }
 
-void set_fractal_parameters(int argc, char **argv, t_fractal *f) {
-    f->name = argv[1];
-    if (f->name[0] == 'J') {
-        if (argc != 5) {
-            ft_printf("Error: Julia requiere c_real, c_imag y max_iter.\n");
-            show_usage();
-            return;
-        }
-        f->c_julia_real = ft_atof(argv[2]);
-        f->c_julia_imag = ft_atof(argv[3]);
-        f->max_iter = ft_atoi(argv[4]);
-    } else {
-        if (argc != 3) {
-            ft_printf("Error: este fractal no requiere parámetros adicionales.\n");
-            show_usage();
-            return;
-        }
-        f->max_iter = ft_atoi(argv[2]);
-    }
+void	set_fractal_parameters(int argc, char **argv, t_fractal *f)
+{
+	f->name = argv[1];
+	if (f->name[0] == 'J')
+	{
+		if (argc != 5)
+		{
+			ft_printf("Error: Julia requiere c_real, c_imag y max_iter.\n");
+			show_usage();
+			return ;
+		}
+		f->c_julia_real = ft_atof(argv[2]);
+		f->c_julia_imag = ft_atof(argv[3]);
+		f->max_iter = ft_atoi(argv[4]);
+	}
+	else
+	{
+		if (argc != 3)
+		{
+			ft_printf(
+				"Error: este fractal no requiere parámetros adicionales.\n");
+			show_usage();
+			return ;
+		}
+		f->max_iter = ft_atoi(argv[2]);
+	}
 }
 
-int parse_arguments(int argc, char **argv, t_fractal *f) {
-    if (!validate_arguments(argc, argv)) {
-        return 0;
-    }
-    set_fractal_parameters(argc, argv, f);
-    return 1;
+int	parse_arguments(int argc, char **argv, t_fractal *f)
+{
+	if (!validate_arguments(argc, argv))
+		return (0);
+	set_fractal_parameters(argc, argv, f);
+	return (1);
 }

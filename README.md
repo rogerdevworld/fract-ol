@@ -29,7 +29,7 @@ Fractals are complex geometric shapes that exhibit self-similarity at various sc
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/fract-ol.git
+   git clone https://github.com/rogerdevworld/fract-ol.git
    cd fract-ol
    ```
 

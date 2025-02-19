@@ -140,6 +140,33 @@ void	process_pixel_m(t_fractal *f, int x, int y)
 	}
 	put_pixel(f, x, y, get_color(iter, f->max_iter, f));
 }
+
+void	mandelbrot(t_fractal *f)
+{
+	int	progress;
+	int	new_progress;
+	int	x;
+	int	y;
+
+	progress = 0;
+	y = 0;
+	while (y < f->height)
+	{
+		x = 0;
+		while (x < f->width)
+		{
+			process_pixel_m(f, x, y);
+			x++;
+		}
+		new_progress = (y * 100) / f->height;
+		if (new_progress != progress)
+		{
+			progress = new_progress;
+			ft_printf("Progreso: %d%%\n", progress);
+		}
+		y++;
+	}
+}
 ```
 - **Initialization**: `zx` and `zy` are initialized to 0.
 - **Iteration**: The loop continues until the point escapes (i.e., \( zx^2 + zy^2 \geq 4 \)) or the maximum number of iterations is reached.
@@ -165,6 +192,33 @@ static void	process_julia_pixel(t_fractal *f, int x, int y)
 		iter++;
 	}
 	put_pixel(f, x, y, get_color(iter, f->max_iter, f));
+}
+
+void	julia(t_fractal *f)
+{
+	int	progress;
+	int	new_progress;
+	int	x;
+	int	y;
+
+	progress = 0;
+	y = 0;
+	while (y < f->height)
+	{
+		x = 0;
+		while (x < f->width)
+		{
+			process_julia_pixel(f, x, y);
+			x++;
+		}
+		new_progress = (y * 100) / f->height;
+		if (new_progress != progress)
+		{
+			progress = new_progress;
+			ft_printf("Progreso: %d%%\n", progress);
+		}
+		y++;
+	}
 }
 ```
 - **Initialization**: `zx` and `zy` are initialized based on the pixel coordinates.
@@ -194,6 +248,33 @@ void	process_pixel(t_fractal *f, int x, int y)
 		iter++;
 	}
 	put_pixel(f, x, y, get_color(iter, f->max_iter, f));
+}
+
+void	burning_ship(t_fractal *f)
+{
+	int	x;
+	int	y;
+	int	progress;
+	int	new_progress;
+
+	y = 0;
+	progress = 0;
+	while (y < f->height)
+	{
+		x = 0;
+		while (x < f->width)
+		{
+			process_pixel(f, x, y);
+			x++;
+		}
+		new_progress = (y * 100) / f->height;
+		if (new_progress != progress)
+		{
+			progress = new_progress;
+			ft_printf("Progreso: %d%%\n", progress);
+		}
+		y++;
+	}
 }
 ```
 - **Initialization**: `zx` and `zy` are initialized to 0.

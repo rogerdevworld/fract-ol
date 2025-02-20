@@ -9,7 +9,7 @@
 /*   Updated: 2025/02/19 19:07:39 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../include/fract-ol.h"
+#include "../include/fractol.h"
 
 void	init_fractal(t_fractal *f)
 {

@@ -11,26 +11,34 @@
 /* ************************************************************************** */
 #include "libft.h"
 
+static double	ft_atoi_part(const char **str, int *sign)
+{
+	double	result;
+
+	result = 0.0;
+	while (**str == ' ' || (**str >= 9 && **str <= 13))
+		(*str)++;
+	if (**str == '-')
+	{
+		*sign = -1;
+		(*str)++;
+	}
+	else if (**str == '+')
+		(*str)++;
+	while (**str >= '0' && **str <= '9')
+		result = result * 10.0 + (*((*str)++) - '0');
+	return (result);
+}
+
 double	ft_atof(const char *str)
 {
 	double	result;
 	double	fraction;
 	int		sign;
 
-	result = 0.0;
-	fraction = 1.0;
 	sign = 1;
-	while (*str == ' ' || (*str >= 9 && *str <= 13))
-		str++;
-	if (*str == '-')
-	{
-		sign = -1;
-		str++;
-	}
-	else if (*str == '+')
-		str++;
-	while (*str >= '0' && *str <= '9')
-		result = result * 10.0 + (*str++ - '0');
+	result = ft_atoi_part(&str, &sign);
+	fraction = 1.0;
 	if (*str == '.')
 	{
 		str++;

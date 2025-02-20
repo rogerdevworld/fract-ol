@@ -9,7 +9,7 @@
 /*   Updated: 2025/02/19 19:08:18 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../include/fract-ol.h"
+#include "../../include/fractol.h"
 
 void	process_pixel_m(t_fractal *f, int x, int y)
 {

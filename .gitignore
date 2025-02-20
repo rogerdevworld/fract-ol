@@ -2,6 +2,7 @@
 .*
 # Exceptuar .gitignore y .git (el repositorio en sí)
 !.gitignore
+!.github
 !.git/
 
 # Ignorar archivos objeto y otros compilados

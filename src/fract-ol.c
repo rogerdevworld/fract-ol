@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fract-ol.c                                         :+:      :+:    :+:   */
+/*   fractol.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,7 +9,7 @@
 /*   Updated: 2025/02/19 17:06:02 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../include/fract-ol.h"
+#include "../include/fractol.h"
 
 int	key_hook(int keycode, t_fractal *f)
 {
@@ -46,6 +46,25 @@ int	mouse_hook(int button, int x, int y, t_fractal *f)
 	}
 	render_fractal(f);
 	return (0);
+}
+
+void	show_usage(void)
+{
+	ft_printf("Uso: ./fractol <fractal> <max_iter>\n");
+	ft_printf("Opciones de fractal:\n");
+	ft_printf("  M: Mandelbrot\n");
+	ft_printf("  J: Julia (requiere c_real y c_imag)\n");
+	ft_printf("  B: Burning Ship\n");
+	ft_printf("Ejemplo para Julia: ./fractol J -0.7 0.27015 100\n");
+	ft_printf("Ejemplo para Mandelbrot: ./fractol M 100\n");
+	ft_printf("Ejemplo para Burning Ship: ./fractol B 100\n");
+}
+
+int	parse_arguments(int argc, char **argv, t_fractal *f)
+{
+	if (!validate_arguments(argc, argv))
+		return (0);
+	return (set_fractal_parameters(argc, argv, f));
 }
 
 int	main(int argc, char **argv)

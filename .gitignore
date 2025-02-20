@@ -1,0 +1,22 @@
+# Ignorar todos los archivos y carpetas que comienzan con "."
+.*
+# Exceptuar .gitignore y .git (el repositorio en sí)
+!.gitignore
+!.git/
+
+# Ignorar archivos objeto y otros compilados
+*.o
+*.a
+*.so
+*.lo
+*.la
+*.out
+*.exe
+*.dll
+*.dylib
+*.class
+*.jar
+*.pyc
+*.pyo
+*.swp
+:x

@@ -29,4 +29,6 @@ jobs:
 
       - name: Run Norminette
         run: norminette src/ libft/ include/
-
+      
+      - name: Run Makefile
+        run: make

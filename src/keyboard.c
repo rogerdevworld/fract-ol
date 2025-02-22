@@ -100,5 +100,4 @@ void	print_progress(int progress)
 
 	ft_printf("\r%s Processing [%d%%]", spinner[spinner_index], progress);
 	spinner_index = (spinner_index + 1) % 10;
-	fflush(stdout);
 }

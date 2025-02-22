@@ -16,9 +16,8 @@ void	init_fractal(t_fractal *f)
 	f->mlx = mlx_init();
 	f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "Fract-ol");
 	f->img = mlx_new_image(f->mlx, WIDTH, HEIGHT);
-	f->addr = mlx_get_data_addr(
-			f->img, &f->bits_per_pixel,
-			&f->line_length, &f->endian);
+	f->addr = mlx_get_data_addr(f->img, &f->bits_per_pixel, &f->line_length,
+			&f->endian);
 	f->width = WIDTH;
 	f->height = HEIGHT;
 	f->cx = -0.5;
@@ -62,18 +61,18 @@ int	get_color(int iter, int max_iter, t_fractal *f)
 	if (iter == max_iter)
 		return (0x000000);
 	if (f->color_scheme == 1)
-		return ((iter * 10 % 256) << 16
-			| (iter * 7 % 256) << 8 | (iter * 5 % 256));
+		return ((iter * 10 % 256) << 16 | (iter * 7 % 256) << 8 | (iter * 5
+				% 256));
 	else if (f->color_scheme == 2)
-		return ((iter * 5 % 256) << 16
-			| (iter * 7 % 256) << 8 | (iter * 10 % 256));
+		return ((iter * 5 % 256) << 16 | (iter * 7 % 256) << 8 | (iter * 10
+				% 256));
 	else if (f->color_scheme == 3)
 	{
 		gray = iter * 255 / max_iter;
 		return ((gray << 16) | (gray << 8) | gray);
 	}
 	else if (f->color_scheme == 4)
-		return ((iter * 123 % 256) << 16
-			| (iter * 321 % 256) << 8 | (iter * 213 % 256));
+		return ((iter * 123 % 256) << 16 | (iter * 321 % 256) << 8 | (iter * 213
+				% 256));
 	return (0xFFFFFF);
 }

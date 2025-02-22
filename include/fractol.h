@@ -83,10 +83,11 @@ int			validate_arguments(int argc, char **argv);
 int			validate_julia_params(char **argv, t_fractal *f);
 int			set_fractal_parameters(int argc, char **argv, t_fractal *f);
 
-int	move_fractal(int keycode, t_fractal *f);
-int	adjust_iterations(int keycode, t_fractal *f);
-int handle_keypress(int keycode, t_fractal *f);
-void print_key_action(int keycode);
-void print_progress(int progress);
+//keyboard funtions
+int			move_fractal(int keycode, t_fractal *f);
+int			adjust_iterations(int keycode, t_fractal *f);
+int			handle_keypress(int keycode, t_fractal *f);
+void		print_key_action(int keycode);
+void		print_progress(int progress);
 
 #endif

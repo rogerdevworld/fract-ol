@@ -1,4 +1,4 @@
-name: Norminette Check
+name: CI for 42 Project
 
 on:
   push:
@@ -29,6 +29,24 @@ jobs:
 
       - name: Run Norminette
         run: norminette src/ libft/ include/
-      
+
+  build:
+    name: Build MiniLibX and Project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y gcc make xorg libxext-dev libx11-dev libbsd-dev
+
+      - name: Clone and compile MiniLibX
+        run: |
+          git clone https://github.com/42Paris/minilibx-linux.git mlx
+          make -C mlx
+
       - name: Run Makefile
         run: make

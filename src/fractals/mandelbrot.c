@@ -34,6 +34,7 @@ void	process_pixel_m(t_fractal *f, int x, int y)
 	put_pixel(f, x, y, get_color(iter, f->max_iter, f));
 }
 
+//mandelbrot draw
 void	mandelbrot(t_fractal *f)
 {
 	int	progress;

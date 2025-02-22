@@ -34,6 +34,7 @@ void	process_pixel(t_fractal *f, int x, int y)
 	put_pixel(f, x, y, get_color(iter, f->max_iter, f));
 }
 
+//burning_ship draw
 void	burning_ship(t_fractal *f)
 {
 	int	x;

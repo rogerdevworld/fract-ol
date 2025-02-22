@@ -11,6 +11,16 @@
 /* ************************************************************************** */
 #include "../include/fractol.h"
 
+// Ejemplo de función de manejo de teclado que llama a print_key_action
+int	handle_keypress(int keycode, t_fractal *f)
+{
+	print_key_action(keycode);
+	key_hook(keycode, f);
+	move_fractal(keycode, f);
+	adjust_iterations(keycode, f);
+	return (0);
+}
+
 int	mouse_hook(int button, int x, int y, t_fractal *f)
 {
 	if (button == 4)

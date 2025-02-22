@@ -14,11 +14,11 @@ NAME = fractol
 SRC_DIR = ./src/
 OBJ_DIR = ./obj
 
-SRCS =	$(SRC_DIR)fract-ol.c $(SRC_DIR)parse.c $(SRC_DIR)window.c \
+SRCS =	$(SRC_DIR)fract-ol.c $(SRC_DIR)parse.c $(SRC_DIR)window.c $(SRC_DIR)test.c \
 		$(SRC_DIR)fractals/julia.c $(SRC_DIR)fractals/mandelbrot.c $(SRC_DIR)fractals/burning_ship.c
 
 OBJS = $(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)/%.o)
-HEADER = ./include/fract-ol.h
+HEADER = ./include/fractol.h
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -I./include
 RM = rm -rf

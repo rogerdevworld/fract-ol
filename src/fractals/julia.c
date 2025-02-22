@@ -52,7 +52,8 @@ void	julia(t_fractal *f)
 		if (new_progress != progress)
 		{
 			progress = new_progress;
-			ft_printf("Progreso: %d%%\n", progress);
+			print_progress(progress);
+			//ft_printf("Progreso: %d%%\n", progress);
 		}
 		y++;
 	}

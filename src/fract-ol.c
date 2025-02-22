@@ -11,25 +11,6 @@
 /* ************************************************************************** */
 #include "../include/fractol.h"
 
-int	key_hook(int keycode, t_fractal *f)
-{
-	if (keycode == 65307)
-	{
-		close_window(f);
-		exit(0);
-	}
-	else if (keycode == 49)
-		f->color_scheme = 1;
-	else if (keycode == 50)
-		f->color_scheme = 2;
-	else if (keycode == 51)
-		f->color_scheme = 3;
-	else if (keycode == 52)
-		f->color_scheme = 4;
-	render_fractal(f);
-	return (0);
-}
-
 int	mouse_hook(int button, int x, int y, t_fractal *f)
 {
 	if (button == 4)
@@ -75,7 +56,7 @@ int	main(int argc, char **argv)
 		return (1);
 	init_fractal(&f);
 	render_fractal(&f);
-	mlx_key_hook(f.win, key_hook, &f);
+	mlx_hook(f.win, 2, 1L << 0, handle_keypress, &f);
 	mlx_hook(f.win, 4, 1L << 2, mouse_hook, &f);
 	mlx_hook(f.win, 17, 1L << 17, close_window, &f);
 	mlx_loop(f.mlx);

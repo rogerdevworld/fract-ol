@@ -65,31 +65,31 @@ int	move_fractal(int keycode, t_fractal *f)
 // Función que imprime el keycode y la acción asignada según la tecla
 void	print_key_action(int keycode)
 {
-	printf("Tecla presionada: %d ", keycode);
+	ft_printf("Tecla presionada: %d ", keycode);
 	if (keycode == 65307)
-		printf("🛑\n");
+		ft_printf("🛑\n");
 	else if (keycode == 49)
-		printf("🎨\n");
+		ft_printf("🎨\n");
 	else if (keycode == 50)
-		printf("🎨\n");
+		ft_printf("🎨\n");
 	else if (keycode == 51)
-		printf("🎨\n");
+		ft_printf("🎨\n");
 	else if (keycode == 52)
-		printf("🎨\n");
+		ft_printf("🎨\n");
 	else if (keycode == 65451)
-		printf("➕\n");
+		ft_printf("➕\n");
 	else if (keycode == 65453)
-		printf("➖\n");
+		ft_printf("➖\n");
 	else if (keycode == 65362)
-		printf("⬆️\n");
+		ft_printf("⬆️\n");
 	else if (keycode == 65364)
-		printf("⬇️\n");
+		ft_printf("⬇️\n");
 	else if (keycode == 65361)
-		printf("⬅️\n");
+		ft_printf("⬅️\n");
 	else if (keycode == 65363)
-		printf("➡️\n");
+		ft_printf("➡️\n");
 	else
-		printf("❓\n");
+		ft_printf("❓\n");
 }
 
 // Función para imprimir el progreso
@@ -98,7 +98,7 @@ void	print_progress(int progress)
 	const char	*spinner[] = {"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"};
 	static int	spinner_index = 0;
 
-	printf("\r%s Processing [%d%%]", spinner[spinner_index], progress);
+	ft_printf("\r%s Processing [%d%%]", spinner[spinner_index], progress);
 	spinner_index = (spinner_index + 1) % 10;
 	fflush(stdout);
 }

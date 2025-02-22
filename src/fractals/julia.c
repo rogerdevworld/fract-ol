@@ -31,6 +31,7 @@ static void	process_julia_pixel(t_fractal *f, int x, int y)
 	put_pixel(f, x, y, get_color(iter, f->max_iter, f));
 }
 
+//julia draw
 void	julia(t_fractal *f)
 {
 	int	progress;
@@ -53,7 +54,6 @@ void	julia(t_fractal *f)
 		{
 			progress = new_progress;
 			print_progress(progress);
-			//ft_printf("Progreso: %d%%\n", progress);
 		}
 		y++;
 	}

@@ -53,7 +53,6 @@ int	is_valid_integer(const char *str)
 	return (*str == '\0');
 }
 
-
 int	validate_arguments(int argc, char **argv)
 {
 	char	*valid_fractals;

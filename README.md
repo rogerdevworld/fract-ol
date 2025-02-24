@@ -9,7 +9,7 @@ Fract-ol is a fractal generator program written in C that uses the MiniLibX libr
 ![Last Updated](https://img.shields.io/badge/Last_Updated-2025%2F02%2F19-yellow)
 ![File Size](https://img.shields.io/badge/File_Size-XX_MB-lightgrey)
 ![Score](https://img.shields.io/badge/Score-125%2F125-gold)
-![Pipeline Status](https://github.com/rogerdevworld/libft/actions/workflows/pipeline.yml/badge.svg)  
+![Pipeline Status](https://github.com/rogerdevworld/libft/actions/workflows/pipeline.yml/badge.svg?refresh=1)  
 
 ## Table of Contents
 1. [Introduction](#introduction)

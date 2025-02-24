@@ -5,11 +5,11 @@
 Fract-ol is a fractal generator program written in C that uses the MiniLibX library to render three types of fractals: Mandelbrot, Julia, and Burning Ship. The program allows users to interact with the fractals by zooming, panning, and changing color schemes.
 
 ![Version](https://img.shields.io/badge/Version-2.0.1-blue)
-![Status](https://img.shields.io/badge/Status-125%2F125-brightgreen)
 ![Last Updated](https://img.shields.io/badge/Last_Updated-2025%2F02%2F19-yellow)
-![File Size](https://img.shields.io/badge/File_Size-XX_MB-lightgrey)
+![File Size](https://img.shields.io/badge/File_Size-3.8_MB-lightgrey)
 ![Score](https://img.shields.io/badge/Score-125%2F125-gold)
 ![Pipeline Status](https://github.com/rogerdevworld/libft/actions/workflows/pipeline.yml/badge.svg?refresh=1)  
+![Pipeline Status](https://github.com/rogerdevworld/libft/actions/workflows/pipeline.yml/badge.svg?branch=main)
 
 ## Table of Contents
 1. [Introduction](#introduction)

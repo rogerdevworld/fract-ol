@@ -38,14 +38,21 @@ int	is_valid_number(const char *str)
 
 int	is_valid_integer(const char *str)
 {
-	while (*str)
-	{
-		if (!ft_isdigit(*str) && *str != '-')
-			return (0);
+	if (!str || *str == '\0')
+		return (0);
+	while (*str == ' ')
 		str++;
-	}
-	return (1);
+	if (*str == '-' || *str == '+')
+		str++;
+	if (!ft_isdigit(*str))
+		return (0);
+	while (ft_isdigit(*str))
+		str++;
+	while (*str == ' ')
+		str++;
+	return (*str == '\0');
 }
+
 
 int	validate_arguments(int argc, char **argv)
 {
@@ -70,7 +77,7 @@ int	validate_arguments(int argc, char **argv)
 int	validate_julia_params(char **argv, t_fractal *f)
 {
 	if (!is_valid_number(argv[2]) || !is_valid_number(argv[3])
-		|| ft_isdigit(ft_atoi(argv[4])))
+		|| !is_valid_integer(argv[4]))
 	{
 		ft_printf("Error: Julia requiere c_real, ");
 		ft_printf("c_imag y max_iter como números válidos.\n");

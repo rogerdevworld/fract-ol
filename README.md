@@ -1,240 +1,176 @@
-# Fract-ol: A Fractal Generator
+# Fract-ol
 
-![Fract-ol Image](./image.png)
-
-Fract-ol is a fractal generator program written in C that uses the MiniLibX library to render three types of fractals: Mandelbrot, Julia, and Burning Ship. The program allows users to interact with the fractals by zooming, panning, and changing color schemes.
-
-![Version](https://img.shields.io/badge/Version-2.3.1-blue)
-![Last Updated](https://img.shields.io/badge/Last_Updated-2025%2F02%2F19-yellow)
-![File Size](https://img.shields.io/badge/File_Size-3.8_MB-lightgrey)
-![Score](https://img.shields.io/badge/Score-125%2F125-gold)
-![Pipeline Status](https://github.com/rogerdevworld/libft/actions/workflows/pipeline.yml/badge.svg?refresh=1)
-
-## Table of Contents
-1. [Introduction](#introduction)
-2. [Features](#features)
-3. [Installation](#installation)
-4. [Usage](#usage)
-5. [Fractal Formulas](#fractal-formulas)
-6. [Code Explanation](#code-explanation)
-7. [License](#license)
-
-## Introduction
-
-Fractals are complex geometric shapes that exhibit self-similarity at various scales. This program generates three well-known fractals:
-- **Mandelbrot Set**: A set of complex numbers for which the function \( f(z) = z^2 + c \) does not diverge.
-- **Julia Set**: Similar to the Mandelbrot set, but with a constant complex number \( c \) added to the iteration.
-- **Burning Ship**: A variation of the Mandelbrot set where the absolute value of the complex number is taken during each iteration.
+Fract-ol is a project that generates fractals such as the Mandelbrot set, Julia set, and Burning Ship using the MiniLibX library. This project includes additional features like rendering progress visualization and printing key presses.
 
 ## Features
 
-- **Interactive Zoom**: Use the mouse scroll to zoom in and out.
-- **Panning**: Move the fractal around by clicking and dragging.
-- **Color Schemes**: Switch between different color schemes using the number keys (1-4).
-- **Progress Indicator**: Displays the rendering progress in the terminal.
+- **Mandelbrot**: Generates the Mandelbrot fractal.
+- **Julia**: Generates the Julia fractal with customizable parameters.
+- **Burning Ship**: Generates the Burning Ship fractal.
+- **Zoom and Movement**: Allows zooming and moving the fractal with the mouse and arrow keys.
+- **Color Scheme Change**: Changes the color scheme with the keys `1`, `2`, `3`, and `4`.
+- **Key Press Printing**: Displays the pressed key and associated action in the terminal.
+- **Rendering Progress**: Shows the rendering progress in the terminal.
 
-## Installation
+## New Functions
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/rogerdevworld/fract-ol.git
-   cd fract-ol
-   ```
+### `print_key_action(int keycode)`
 
-2. **Compile the program**:
-   ```bash
-   make
-   ```
+This function prints the pressed key and its associated action in the terminal. It is called every time a key is pressed in the fractal window.
 
-3. **Run the program**:
-   ```bash
-   ./fract-ol <fractal> <max_iter>
-   ```
-   Replace `<fractal>` with `M` (Mandelbrot), `J` (Julia), or `B` (Burning Ship). Replace `<max_iter>` with the maximum number of iterations.
+```c
+void	print_key_action(int keycode)
+{
+	ft_printf("Key pressed: %d ", keycode);
+	if (keycode == 65307)
+		ft_printf("🛑\n");
+	else if (keycode == 49)
+		ft_printf("🎨\n");
+	else if (keycode == 50)
+		ft_printf("🎨\n");
+	else if (keycode == 51)
+		ft_printf("🎨\n");
+	else if (keycode == 52)
+		ft_printf("🎨\n");
+	else if (keycode == 65451)
+		ft_printf("➕\n");
+	else if (keycode == 65453)
+		ft_printf("➖\n");
+	else if (keycode == 65362)
+		ft_printf("⬆️\n");
+	else if (keycode == 65364)
+		ft_printf("⬇️\n");
+	else if (keycode == 65361)
+		ft_printf("⬅️\n");
+	else if (keycode == 65363)
+		ft_printf("➡️\n");
+	else
+		ft_printf("❓\n");
+}
+```
+
+### `print_progress(int progress)`
+
+This function shows the rendering progress in the terminal. It is called during the fractal rendering to indicate the percentage completed.
+
+```c
+void	print_progress(int progress)
+{
+	const char	*spinner[] = {"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"};
+	static int	spinner_index = 0;
+
+	ft_printf("\r%s Processing [%d%%]", spinner[spinner_index], progress);
+	spinner_index = (spinner_index + 1) % 10;
+}
+```
 
 ## Usage
 
-### Mandelbrot Set
+### Compilation
+
+To compile the project, use the following command:
+
 ```bash
-./fract-ol M 100
+make
 ```
 
-### Julia Set
+### Execution
+
+To run the program, use the following format:
+
 ```bash
-./fract-ol J -0.7 0.27015 100
+./fractol <fractal> <max_iter>
 ```
 
-### Burning Ship
-```bash
-./fract-ol B 100
-```
+- `<fractal>`: Can be `M` for Mandelbrot, `J` for Julia, or `B` for Burning Ship.
+- `<max_iter>`: Maximum number of iterations for the fractal calculation.
+
+#### Examples
+
+- **Mandelbrot**:
+  ```bash
+  ./fractol M 100
+  ```
+
+- **Julia**:
+  ```bash
+  ./fractol J -0.7 0.27015 100
+  ```
+
+- **Burning Ship**:
+  ```bash
+  ./fractol B 100
+  ```
 
 ### Controls
-- **Zoom**: Scroll up/down with the mouse.
-- **Pan**: Click and drag with the mouse.
-- **Color Schemes**: Press `1`, `2`, `3`, or `4` to switch between color schemes.
-- **Exit**: Press `ESC` to close the window.
 
-## Fractal Formulas
+- **Arrow Keys**: Move the fractal.
+- **Mouse Wheel**: Zoom in and out.
+- **Keys `1`, `2`, `3`, `4`**: Change the color scheme.
+- **`Esc` Key**: Closes the window and terminates the program.
 
-### Mandelbrot Set
-The Mandelbrot set is defined by the iterative formula:
-\[ z_{n+1} = z_n^2 + c \]
-where \( z_0 = 0 \) and \( c \) is a complex number representing the pixel coordinates.
+## Integration of New Functions
 
-### Julia Set
-The Julia set is defined by the iterative formula:
-\[ z_{n+1} = z_n^2 + c \]
-where \( z_0 \) is the pixel coordinates and \( c \) is a constant complex number.
+The functions `print_key_action` and `print_progress` are already integrated into the provided code. The `print_key_action` function is called inside `handle_keypress` to print the pressed key, and `print_progress` is called during the rendering of each fractal to show the progress.
 
-### Burning Ship
-The Burning Ship fractal is defined by the iterative formula:
-\[ z_{n+1} = (|Re(z_n)| + i|Im(z_n)|)^2 + c \]
-where \( z_0 = 0 \) and \( c \) is a complex number representing the pixel coordinates.
-
-## Code Explanation
-
-### Main Components
-
-1. **Fractal Structure (`t_fractal`)**:
-   - Contains parameters like `zoom`, `move_x`, `move_y`, and `max_iter`.
-   - Holds the image data and window handles.
-
-2. **Rendering Functions**:
-   - `mandelbrot(t_fractal *f)`: Renders the Mandelbrot set.
-   - `julia(t_fractal *f)`: Renders the Julia set.
-   - `burning_ship(t_fractal *f)`: Renders the Burning Ship fractal.
-
-3. **Pixel Processing**:
-   - `process_pixel_m(t_fractal *f, int x, int y)`: Processes each pixel for the Mandelbrot set.
-   - `process_julia_pixel(t_fractal *f, int x, int y)`: Processes each pixel for the Julia set.
-   - `process_pixel(t_fractal *f, int x, int y)`: Processes each pixel for the Burning Ship fractal.
-
-4. **Color Generation**:
-   - `get_color(int iter, int max_iter, t_fractal *f)`: Generates a color based on the number of iterations and the selected color scheme.
-
-5. **User Interaction**:
-   - `key_hook(int keycode, t_fractal *f)`: Handles keyboard input.
-   - `mouse_hook(int button, int x, int y, t_fractal *f)`: Handles mouse input.
-
-6. **Window Management**:
-   - `init_fractal(t_fractal *f)`: Initializes the MiniLibX window and image.
-   - `render_fractal(t_fractal *f)`: Renders the selected fractal.
-   - `close_window(t_fractal *f)`: Closes the window and exits the program.
-
-### Example Code Walkthrough
-
-#### Mandelbrot Set Rendering
 ```c
-void	process_pixel_m(t_fractal *f, int x, int y)
+int	handle_keypress(int keycode, t_fractal *f)
 {
-	double	zx;
-	double	zy;
-	int		iter;
-	double	tmp;
-
-	zx = 0.0;
-	zy = 0.0;
-	iter = 0;
-	tmp = 0;
-	while (zx * zx + zy * zy < 4 && iter < f->max_iter)
-	{
-		tmp = zx * zx - zy * zy + (x - f->width / 2.0) * 4.0 / (f->width
-				* f->zoom) + f->move_x;
-		zy = 2.0 * zx * zy + (y - f->height / 2.0) * 4.0 / (f->height * f->zoom)
-			+ f->move_y;
-		zx = tmp;
-		iter++;
-	}
-	put_pixel(f, x, y, get_color(iter, f->max_iter, f));
+	print_key_action(keycode);
+	key_hook(keycode, f);
+	move_fractal(keycode, f);
+	adjust_iterations(keycode, f);
+	return (0);
 }
+```
 
-void	mandelbrot(t_fractal *f)
+```c
+void	burning_ship(t_fractal *f)
 {
-	int	progress;
-	int	new_progress;
 	int	x;
 	int	y;
+	int	progress;
+	int	new_progress;
 
-	progress = 0;
 	y = 0;
+	progress = 0;
 	while (y < f->height)
 	{
 		x = 0;
 		while (x < f->width)
 		{
-			process_pixel_m(f, x, y);
+			process_pixel(f, x, y);
 			x++;
 		}
 		new_progress = (y * 100) / f->height;
 		if (new_progress != progress)
 		{
 			progress = new_progress;
-			ft_printf("Progreso: %d%%\n", progress);
+			print_progress(progress);
 		}
 		y++;
 	}
 }
 ```
-- **Initialization**: `zx` and `zy` are initialized to 0.
-- **Iteration**: The loop continues until the point escapes (i.e., \( zx^2 + zy^2 \geq 4 \)) or the maximum number of iterations is reached.
-- **Pixel Coloring**: The color is determined by the number of iterations.
 
-#### Julia Set Rendering
+## Complete Fractal Functions
+
+### `burning_ship.c`
+
 ```c
-static void	process_julia_pixel(t_fractal *f, int x, int y)
-{
-	double	zx;
-	double	zy;
-	int		iter;
-	double	tmp;
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   burning_ship.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 17:07:41 by rmarrero          #+#    #+#             */
+/*   Updated: 2025/02/19 20:24:16 by rmarrero         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "../../include/fractol.h"
 
-	zx = (x - f->width / 2.0) * 4.0 / (f->width * f->zoom) + f->move_x;
-	zy = (y - f->height / 2.0) * 4.0 / (f->height * f->zoom) + f->move_y;
-	iter = 0;
-	while (zx * zx + zy * zy < 4 && iter < f->max_iter)
-	{
-		tmp = zx * zx - zy * zy + f->c_julia_real;
-		zy = 2.0 * zx * zy + f->c_julia_imag;
-		zx = tmp;
-		iter++;
-	}
-	put_pixel(f, x, y, get_color(iter, f->max_iter, f));
-}
-
-void	julia(t_fractal *f)
-{
-	int	progress;
-	int	new_progress;
-	int	x;
-	int	y;
-
-	progress = 0;
-	y = 0;
-	while (y < f->height)
-	{
-		x = 0;
-		while (x < f->width)
-		{
-			process_julia_pixel(f, x, y);
-			x++;
-		}
-		new_progress = (y * 100) / f->height;
-		if (new_progress != progress)
-		{
-			progress = new_progress;
-			ft_printf("Progreso: %d%%\n", progress);
-		}
-		y++;
-	}
-}
-```
-- **Initialization**: `zx` and `zy` are initialized based on the pixel coordinates.
-- **Iteration**: The loop continues until the point escapes or the maximum number of iterations is reached.
-- **Pixel Coloring**: The color is determined by the number of iterations.
-
-#### Burning Ship Rendering
-```c
 void	process_pixel(t_fractal *f, int x, int y)
 {
 	double	zx;
@@ -258,6 +194,7 @@ void	process_pixel(t_fractal *f, int x, int y)
 	put_pixel(f, x, y, get_color(iter, f->max_iter, f));
 }
 
+//burning_ship draw
 void	burning_ship(t_fractal *f)
 {
 	int	x;
@@ -279,16 +216,193 @@ void	burning_ship(t_fractal *f)
 		if (new_progress != progress)
 		{
 			progress = new_progress;
-			ft_printf("Progreso: %d%%\n", progress);
+			print_progress(progress);
 		}
 		y++;
 	}
 }
 ```
-- **Initialization**: `zx` and `zy` are initialized to 0.
-- **Iteration**: The loop continues until the point escapes or the maximum number of iterations is reached.
-- **Pixel Coloring**: The color is determined by the number of iterations.
+
+#### Explanation of Burning Ship Fractal
+
+The Burning Ship fractal is a variation of the Mandelbrot set. It is defined by the iterative formula:
+
+\[ z_{n+1} = (|Re(z_n)| + i|Im(z_n)|)^2 + c \]
+
+Where:
+- \( z \) is a complex number.
+- \( c \) is a constant complex number derived from the pixel coordinates.
+- The absolute values of the real and imaginary parts of \( z \) are taken at each iteration, giving the fractal its characteristic "ship-like" appearance.
+
+### `julia.c`
+
+```c
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   julia.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 17:07:41 by rmarrero          #+#    #+#             */
+/*   Updated: 2025/02/19 20:24:16 by rmarrero         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "../../include/fractol.h"
+
+static void	process_julia_pixel(t_fractal *f, int x, int y)
+{
+	double	zx;
+	double	zy;
+	int		iter;
+	double	tmp;
+
+	zx = (x - f->width / 2.0) * 4.0 / (f->width * f->zoom) + f->move_x;
+	zy = (y - f->height / 2.0) * 4.0 / (f->height * f->zoom) + f->move_y;
+	iter = 0;
+	while (zx * zx + zy * zy < 4 && iter < f->max_iter)
+	{
+		tmp = zx * zx - zy * zy + f->c_julia_real;
+		zy = 2.0 * zx * zy + f->c_julia_imag;
+		zx = tmp;
+		iter++;
+	}
+	put_pixel(f, x, y, get_color(iter, f->max_iter, f));
+}
+
+//julia draw
+void	julia(t_fractal *f)
+{
+	int	progress;
+	int	new_progress;
+	int	x;
+	int	y;
+
+	progress = 0;
+	y = 0;
+	while (y < f->height)
+	{
+		x = 0;
+		while (x < f->width)
+		{
+			process_julia_pixel(f, x, y);
+			x++;
+		}
+		new_progress = (y * 100) / f->height;
+		if (new_progress != progress)
+		{
+			progress = new_progress;
+			print_progress(progress);
+		}
+		y++;
+	}
+}
+```
+
+#### Explanation of Julia Fractal
+
+The Julia set is defined by the iterative formula:
+
+\[ z_{n+1} = z_n^2 + c \]
+
+Where:
+- \( z \) is a complex number.
+- \( c \) is a constant complex number that determines the shape of the fractal.
+- The initial value of \( z \) is derived from the pixel coordinates.
+
+The Julia set is closely related to the Mandelbrot set, but while the Mandelbrot set varies \( c \) and fixes \( z_0 = 0 \), the Julia set fixes \( c \) and varies \( z_0 \).
+
+### `mandelbrot.c`
+
+```c
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 19:07:54 by rmarrero          #+#    #+#             */
+/*   Updated: 2025/02/19 19:08:18 by rmarrero         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "../../include/fractol.h"
+
+void	process_pixel_m(t_fractal *f, int x, int y)
+{
+	double	zx;
+	double	zy;
+	int		iter;
+	double	tmp;
+
+	zx = 0.0;
+	zy = 0.0;
+	iter = 0;
+	tmp = 0;
+	while (zx * zx + zy * zy < 4 && iter < f->max_iter)
+	{
+		tmp = zx * zx - zy * zy + (x - f->width / 2.0) * 4.0 / (f->width
+				* f->zoom) + f->move_x;
+		zy = 2.0 * zx * zy + (y - f->height / 2.0) * 4.0 / (f->height * f->zoom)
+			+ f->move_y;
+		zx = tmp;
+		iter++;
+	}
+	put_pixel(f, x, y, get_color(iter, f->max_iter, f));
+}
+
+//mandelbrot draw
+void	mandelbrot(t_fractal *f)
+{
+	int	progress;
+	int	new_progress;
+	int	x;
+	int	y;
+
+	progress = 0;
+	y = 0;
+	while (y < f->height)
+	{
+		x = 0;
+		while (x < f->width)
+		{
+			process_pixel_m(f, x, y);
+			x++;
+		}
+		new_progress = (y * 100) / f->height;
+		if (new_progress != progress)
+		{
+			progress = new_progress;
+			print_progress(progress);
+		}
+		y++;
+	}
+}
+```
+
+#### Explanation of Mandelbrot Fractal
+
+The Mandelbrot set is defined by the iterative formula:
+
+\[ z_{n+1} = z_n^2 + c \]
+
+Where:
+- \( z \) is a complex number.
+- \( c \) is a constant complex number derived from the pixel coordinates.
+- The initial value of \( z \) is \( z_0 = 0 \).
+
+The Mandelbrot set is the set of complex numbers \( c \) for which the sequence \( z_n \) does not diverge to infinity. The fractal is visualized by coloring each point \( c \) based on how quickly the sequence \( z_n \) diverges.
+
+## Contributions
+
+If you wish to contribute to this project, please follow these guidelines:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/new-feature`).
+3. Make your changes and commit them (`git commit -am 'Add new feature'`).
+4. Push to the branch (`git push origin feature/new-feature`).
+5. Open a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. For more details, see the [LICENSE](LICENSE) file.

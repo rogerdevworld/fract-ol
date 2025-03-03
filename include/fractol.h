@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fract-ol.h                                         :+:      :+:    :+:   */
+/*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:11:22 by rmarrero          #+#    #+#             */
-/*   Updated: 2025/02/20 20:11:25 by rmarrero         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:59:47 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FRACTOL_H
@@ -80,7 +80,7 @@ int			parse_arguments(int argc, char **argv, t_fractal *f);
 int			is_valid_number(const char *str);
 int			is_valid_integer(const char *str);
 int			validate_arguments(int argc, char **argv);
-int			validate_julia_params(char **argv, t_fractal *f);
+int			validate_julia_params(char **argv, int argc, t_fractal *f);
 int			set_fractal_parameters(int argc, char **argv, t_fractal *f);
 
 //keyboard funtions

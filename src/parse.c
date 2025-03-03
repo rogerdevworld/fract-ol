@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rmarrero <rmarrero@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:42:58 by rmarrero          #+#    #+#             */
-/*   Updated: 2025/02/20 20:05:57 by rmarrero         ###   ########.fr       */
+/*   Updated: 2025/03/03 08:17:27 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/fractol.h"
@@ -73,9 +73,9 @@ int	validate_arguments(int argc, char **argv)
 	return (1);
 }
 
-int	validate_julia_params(char **argv, t_fractal *f)
+int	validate_julia_params(char **argv, int argc, t_fractal *f)
 {
-	if (!is_valid_number(argv[2]) || !is_valid_number(argv[3])
+	if (argc != 5 || !is_valid_number(argv[2]) || !is_valid_number(argv[3])
 		|| !is_valid_integer(argv[4]))
 	{
 		ft_printf("Error: Julia requiere c_real, ");
@@ -89,7 +89,7 @@ int	validate_julia_params(char **argv, t_fractal *f)
 	if (f->c_julia_real < JULIA_REAL_MIN || f->c_julia_real > JULIA_REAL_MAX
 		|| f->c_julia_imag < JULIA_IMAG_MIN || f->c_julia_imag > JULIA_IMAG_MAX)
 	{
-		ft_printf("Error: Valores de Julia fuera de rango (%.1f a %.1f).\n",
+		ft_printf("Error: Valores de Julia fuera de rango 2 & -2\n",
 			JULIA_REAL_MIN, JULIA_REAL_MAX);
 		return (0);
 	}
@@ -101,7 +101,7 @@ int	set_fractal_parameters(int argc, char **argv, t_fractal *f)
 	f->name = argv[1];
 	if (f->name[0] == 'J')
 	{
-		if (argc != 5 || !validate_julia_params(argv, f))
+		if (!validate_julia_params(argv, argc, f) || argc != 5)
 			return (0);
 	}
 	else

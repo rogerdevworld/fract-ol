@@ -50,13 +50,13 @@ int	adjust_iterations(int keycode, t_fractal *f)
 
 int	move_fractal(int keycode, t_fractal *f)
 {
-	if (keycode == 65362)
+	if (keycode == 65362 || keycode == 119)
 		f->move_y -= 0.1 / f->zoom;
-	else if (keycode == 65364)
+	else if (keycode == 65364 || keycode == 115)
 		f->move_y += 0.1 / f->zoom;
-	else if (keycode == 65361)
+	else if (keycode == 65361 || keycode == 97)
 		f->move_x -= 0.1 / f->zoom;
-	else if (keycode == 65363)
+	else if (keycode == 65363 || keycode == 100)
 		f->move_x += 0.1 / f->zoom;
 	render_fractal(f);
 	return (0);
